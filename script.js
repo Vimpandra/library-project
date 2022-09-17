@@ -5,16 +5,28 @@ function Book(title, author) {
     this.author = author;
 }
 
-function addBookToLibrary() {
-
-}
-
-
 const hobbit = new Book(`The Hobbit`, `Tolkien`);
 const tomSawyer = new Book(`Tom Sawyer`, `Mark Twain`);
 
 myLibrary.push(hobbit, tomSawyer);
-console.log(myLibrary);
+
+const results = document.getElementById(`results`);
+
+function displayBooks(book) {
+    let card = document.createElement(`div`);
+    card.classList.add(`bookCard`);
+
+    let bookTitle = document.createElement(`h2`);
+    bookTitle.textContent = book.title;
+    card.appendChild(bookTitle);
+
+    let bookAuthor = document.createElement(`p`);
+    bookAuthor.textContent = book.author;
+    card.appendChild(bookAuthor);
+
+    results.appendChild(card);
+}
+
 
 // DOM
 
@@ -28,5 +40,9 @@ submitBtn.addEventListener(`click`, () => {
     titleInput.value = ``;
     authorInput.value = ``;
 
-    console.log(myLibrary);
+
+    for (let i = 0; i < myLibrary.length; i++) {
+        displayBooks(myLibrary[i]);
+    }
 });
+
