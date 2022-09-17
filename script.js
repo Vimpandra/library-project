@@ -34,6 +34,9 @@ const submitBtn = document.getElementById(`submitBtn`);
 const titleInput = document.getElementById(`title`);
 const authorInput = document.getElementById(`author`);
 
+const addBookBtn = document.getElementById(`addBookBtn`);
+const addBookWindow = document.getElementById(`addBookWindow`);
+
 submitBtn.addEventListener(`click`, () => {
     let newBook = new Book(titleInput.value, authorInput.value);
     myLibrary.push(newBook);
@@ -41,7 +44,7 @@ submitBtn.addEventListener(`click`, () => {
     titleInput.classList.remove(`filled`);
     authorInput.value = null;
     authorInput.classList.remove(`filled`);
-
+    addBookWindow.classList.add(`hidden`);
 
     for (let i = 0; i < myLibrary.length; i++) {
         displayBooks(myLibrary[i]);
@@ -57,10 +60,13 @@ function checkFill(ipt) {
 };
 
 const inputs = [titleInput, authorInput];
-
 inputs.forEach(input => {
     input.addEventListener(`input`, () => {
         checkFill(input);
     })
 });
 
+
+addBookBtn.addEventListener(`click`, () => {
+    addBookWindow.classList.toggle(`hidden`);
+});
