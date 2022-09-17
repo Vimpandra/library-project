@@ -37,12 +37,30 @@ const authorInput = document.getElementById(`author`);
 submitBtn.addEventListener(`click`, () => {
     let newBook = new Book(titleInput.value, authorInput.value);
     myLibrary.push(newBook);
-    titleInput.value = ``;
-    authorInput.value = ``;
+    titleInput.value = null;
+    titleInput.classList.remove(`filled`);
+    authorInput.value = null;
+    authorInput.classList.remove(`filled`);
 
 
     for (let i = 0; i < myLibrary.length; i++) {
         displayBooks(myLibrary[i]);
     }
+});
+
+function checkFill(ipt) {
+    if (ipt.value.length == 0) {
+        ipt.classList.remove(`filled`)
+    } else {
+        ipt.classList.add(`filled`)
+    }
+};
+
+const inputs = [titleInput, authorInput];
+
+inputs.forEach(input => {
+    input.addEventListener(`input`, () => {
+        checkFill(input);
+    })
 });
 

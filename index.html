@@ -9,17 +9,25 @@
     <script src="./script.js" defer></script>
 </head>
 <body>
+    <header>
+        <h1>My Library</h1>
+        
+        <button class="darkBtn" id="addBookBtn">Add a new Book</button>
+    </header>
+
     <div class="inputBooks">
-            <div>
-                <label for="boookTitle">Title</label>
+        <h2>Enter a new book</h2>
+            <div class="inpt">
                 <input type="text" name="title" id="title">
+                <label for="title">Title</label>
             </div>
-            <div>
-                <label for="author">Author</label>
+            <div class="inpt">
                 <input type="text" name="author" id="author">
+                <label for="author">Author</label>
             </div>
-            <button id="submitBtn">Save to Library</button>
+            <button class="darkBtn" id="submitBtn">Save to Library</button>
     </div>
+
     <div id="results"></div>
 </body>
 </html>
