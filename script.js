@@ -13,6 +13,10 @@ myLibrary.push(hobbit, tomSawyer);
 
 const results = document.getElementById(`results`);
 
+for (let i = 0; i < myLibrary.length; i++) {
+    displayBooks(myLibrary[i]);
+}
+
 function displayBooks(book) {
     let card = document.createElement(`div`);
     card.classList.add(`bookCard`);
@@ -25,18 +29,16 @@ function displayBooks(book) {
     bookAuthor.textContent = book.author;
     card.appendChild(bookAuthor);
 
-    let readStatus = document.createElement(`p`);
-    readStatus.classList.add(`readStatus`);
-    if (book.read == true) {
-        readStatus.textContent = `Already read this one`;
+    let bookRead = document.createElement(`p`);
+    bookRead.classList.add(`bookRead`);
+    if (book.read) {
+        bookRead.textContent = `I've already read this one`;
     } else {
-        readStatus.textContent = `Yet to read this one`;
-    }
-    card.appendChild(readStatus)
-
+        bookRead.textContent = `I'm yet to read this one`;
+    };
+    card.appendChild(bookRead);
 
     results.appendChild(card);
-    console.log(book.read);
 }
 
 
@@ -45,24 +47,22 @@ function displayBooks(book) {
 const submitBtn = document.getElementById(`submitBtn`);
 const titleInput = document.getElementById(`title`);
 const authorInput = document.getElementById(`author`);
-const readInput = document.getElementById(`read`);
-
-readInput.addEventListener(`input`, (e) => {
-    console.log(e)
-});
+const tglBtn = document.getElementById(`tglBtn`);
+const tglText = document.getElementById(`tglText`);
 
 const addBookBtn = document.getElementById(`addBookBtn`);
 const addBookWindow = document.getElementById(`addBookWindow`);
 
 submitBtn.addEventListener(`click`, () => {
-    let newBook = new Book(titleInput.value, authorInput.value, readInput.value);
+    let newBook = new Book(titleInput.value, authorInput.value, tglBtn.classList.contains(`active`));
     myLibrary.push(newBook);
     titleInput.value = null;
     titleInput.classList.remove(`filled`);
     authorInput.value = null;
     authorInput.classList.remove(`filled`);
     addBookWindow.classList.add(`hidden`);
-
+    
+    results.innerHTML = ``;
     for (let i = 0; i < myLibrary.length; i++) {
         displayBooks(myLibrary[i]);
     }
@@ -86,4 +86,13 @@ inputs.forEach(input => {
 
 addBookBtn.addEventListener(`click`, () => {
     addBookWindow.classList.toggle(`hidden`);
+});
+
+tglBtn.addEventListener(`click`, () => {
+    tglBtn.classList.toggle(`active`);
+    if (tglBtn.classList.contains(`active`)) {
+        tglText.textContent = `Yes, I have`;
+    } else {
+        tglText.textContent = `No, not yet`
+    }
 });
