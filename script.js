@@ -1,12 +1,13 @@
 let myLibrary = [];
 
-function Book(title, author) {
+function Book(title, author, read) {
     this.title = title;
     this.author = author;
+    this.read = read;
 }
 
-const hobbit = new Book(`The Hobbit`, `Tolkien`);
-const tomSawyer = new Book(`Tom Sawyer`, `Mark Twain`);
+const hobbit = new Book(`The Hobbit`, `Tolkien`, true);
+const tomSawyer = new Book(`Tom Sawyer`, `Mark Twain`, false);
 
 myLibrary.push(hobbit, tomSawyer);
 
@@ -24,7 +25,18 @@ function displayBooks(book) {
     bookAuthor.textContent = book.author;
     card.appendChild(bookAuthor);
 
+    let readStatus = document.createElement(`p`);
+    readStatus.classList.add(`readStatus`);
+    if (book.read == true) {
+        readStatus.textContent = `Already read this one`;
+    } else {
+        readStatus.textContent = `Yet to read this one`;
+    }
+    card.appendChild(readStatus)
+
+
     results.appendChild(card);
+    console.log(book.read);
 }
 
 
@@ -33,12 +45,17 @@ function displayBooks(book) {
 const submitBtn = document.getElementById(`submitBtn`);
 const titleInput = document.getElementById(`title`);
 const authorInput = document.getElementById(`author`);
+const readInput = document.getElementById(`read`);
+
+readInput.addEventListener(`input`, (e) => {
+    console.log(e)
+});
 
 const addBookBtn = document.getElementById(`addBookBtn`);
 const addBookWindow = document.getElementById(`addBookWindow`);
 
 submitBtn.addEventListener(`click`, () => {
-    let newBook = new Book(titleInput.value, authorInput.value);
+    let newBook = new Book(titleInput.value, authorInput.value, readInput.value);
     myLibrary.push(newBook);
     titleInput.value = null;
     titleInput.classList.remove(`filled`);
