@@ -26,18 +26,42 @@ function displayBooks(book) {
     card.appendChild(bookTitle);
 
     let bookAuthor = document.createElement(`p`);
+    bookAuthor.classList.add(`bookAuthor`);
     bookAuthor.textContent = book.author;
     card.appendChild(bookAuthor);
+
+    let controlPanel = document.createElement(`div`);
+    controlPanel.classList.add(`controlPanel`);
+
+    let readInfo = document.createElement(`div`);
+    readInfo.classList.add(`readInfo`);
+
+    let readIcon = document.createElement(`div`);
+    readIcon.classList.add(`readIcon`);
+    if (book.read) {
+        readIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" /></svg>`;
+    } else {
+        readIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z" /></svg>`;
+    }
+    readInfo.appendChild(readIcon);
 
     let bookRead = document.createElement(`p`);
     bookRead.classList.add(`bookRead`);
     if (book.read) {
-        bookRead.textContent = `I've already read this one`;
+        bookRead.textContent = `I've read this`;
     } else {
-        bookRead.textContent = `I'm yet to read this one`;
+        bookRead.textContent = `Not yet read`;
     };
-    card.appendChild(bookRead);
+    readInfo.appendChild(bookRead);
 
+    let deleteBtn = document.createElement(`div`);
+    deleteBtn.classList.add(`deleteBtn`);
+    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>`;
+    
+    controlPanel.appendChild(readInfo);
+    controlPanel.appendChild(deleteBtn);
+
+    card.appendChild(controlPanel);
     results.appendChild(card);
 }
 
@@ -60,9 +84,12 @@ submitBtn.addEventListener(`click`, () => {
     titleInput.classList.remove(`filled`);
     authorInput.value = null;
     authorInput.classList.remove(`filled`);
+    tglBtn.classList.remove(`active`);
+    tglText.textContent = `No, not yet`;
     addBookWindow.classList.add(`hidden`);
     
-    results.innerHTML = ``;
+    results.innerHTML = null;
+
     for (let i = 0; i < myLibrary.length; i++) {
         displayBooks(myLibrary[i]);
     }
