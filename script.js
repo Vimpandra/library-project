@@ -27,7 +27,7 @@ function displayBooks(book) {
 
     let bookAuthor = document.createElement(`p`);
     bookAuthor.classList.add(`bookAuthor`);
-    bookAuthor.textContent = book.author;
+    bookAuthor.textContent = `by ${book.author}`;
     card.appendChild(bookAuthor);
 
     let controlPanel = document.createElement(`div`);
@@ -40,8 +40,10 @@ function displayBooks(book) {
     readIcon.classList.add(`readIcon`);
     if (book.read) {
         readIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" /></svg>`;
+        readInfo.style.cssText = `background-color: var(--affirmative-color);`;
     } else {
         readIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z" /></svg>`;
+        readInfo.style.cssText = `background-color: var(--accent-color);`;
     }
     readInfo.appendChild(readIcon);
 

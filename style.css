@@ -11,7 +11,7 @@
     --medium-color: #444444;
     --clear-color: #ffffff;
     --affirmative-color: #46D82E;
-    --negative-color: #FF0000;
+    --negative-color: #ff3232;
     --accent-color: #FFC120;
 }
 
@@ -30,7 +30,7 @@ header {
     background-color: var(--clear-color);
     padding: 1.4rem;
     box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+    z-index: 9;
 }
 
 .inputBooks {
@@ -49,6 +49,7 @@ header {
     justify-content: center;
     gap: 1rem;
     box-shadow: 0 0 2px 4000px rgba(0, 0, 0, 0.4);
+    z-index: 8;
 }
 
 .darkBtn {
@@ -109,6 +110,8 @@ header {
     display: none;
 }
 
+/* Book Cards */
+
 #results {
     margin-top: 8rem;
     margin-left: 2rem;
@@ -127,18 +130,49 @@ header {
     height: 14rem;
     width: 12rem;
     color: var(--dark-color);
+    text-align: center;
+    position: relative;
 }
 
 .bookCard h2 {
+    margin-top: 2.4rem;
     margin-bottom: 0.6rem;
+    font-size: 1.6rem;
 }
 
 .bookCard .bookAuthor {
-
+    font-size: 1rem;
+    color: var(--medium-color);
 }
 
-.bookCard .bookRead {
+.controlPanel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
 
+.controlPanel svg {
+    height: 1.6rem;
+    fill: var(--dark-color);
+}
+
+.readInfo {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0.8rem 0.6rem;
+    border-radius: 0 0 0 8px;
+}
+
+.deleteBtn {
+    background-color: var(--negative-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 8px 0;
 }
 
 .readCheck label {
