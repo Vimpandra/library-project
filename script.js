@@ -14,12 +14,13 @@ myLibrary.push(hobbit, tomSawyer);
 const results = document.getElementById(`results`);
 
 for (let i = 0; i < myLibrary.length; i++) {
-    displayBooks(myLibrary[i]);
+    displayBooks(myLibrary[i], i);
 }
 
-function displayBooks(book) {
+function displayBooks(book, i) {
     let card = document.createElement(`div`);
     card.classList.add(`bookCard`);
+    card.dataset.indexNum = i;
 
     let bookTitle = document.createElement(`h2`);
     bookTitle.textContent = book.title;
@@ -43,7 +44,7 @@ function displayBooks(book) {
         readInfo.style.cssText = `background-color: var(--affirmative-color);`;
     } else {
         readIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z" /></svg>`;
-        readInfo.style.cssText = `background-color: var(--accent-color);`;
+        readInfo.style.cssText = `background-color: var(--accent-color); cursor: pointer;`;
     }
     readInfo.appendChild(readIcon);
 
@@ -59,7 +60,14 @@ function displayBooks(book) {
     let deleteBtn = document.createElement(`div`);
     deleteBtn.classList.add(`deleteBtn`);
     deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>`;
-    
+    deleteBtn.addEventListener(`click`, () => {
+        myLibrary.splice(i, 1);
+        results.innerHTML = null;
+        for (let i = 0; i < myLibrary.length; i++) {
+            displayBooks(myLibrary[i], i);
+        }
+    });
+
     controlPanel.appendChild(readInfo);
     controlPanel.appendChild(deleteBtn);
 
@@ -93,7 +101,7 @@ submitBtn.addEventListener(`click`, () => {
     results.innerHTML = null;
 
     for (let i = 0; i < myLibrary.length; i++) {
-        displayBooks(myLibrary[i]);
+        displayBooks(myLibrary[i], i);
     }
 });
 
