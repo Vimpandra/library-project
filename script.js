@@ -1,3 +1,5 @@
+/* Object constructor */
+
 let myLibrary = [];
 
 function Book(title, author, read) {
@@ -6,16 +8,75 @@ function Book(title, author, read) {
     this.read = read;
 }
 
+/* Sample Objects */
+
 const hobbit = new Book(`The Hobbit`, `Tolkien`, true);
 const tomSawyer = new Book(`Tom Sawyer`, `Mark Twain`, false);
 
 myLibrary.push(hobbit, tomSawyer);
 
+/* DOM Elements */
+
 const results = document.getElementById(`results`);
+const submitBtn = document.getElementById(`submitBtn`);
+const titleInput = document.getElementById(`title`);
+const authorInput = document.getElementById(`author`);
+const tglBtn = document.getElementById(`tglBtn`);
+const tglText = document.getElementById(`tglText`);
+const addBookBtn = document.getElementById(`addBookBtn`);
+const addBookWindow = document.getElementById(`addBookWindow`);
 
 for (let i = 0; i < myLibrary.length; i++) {
     displayBooks(myLibrary[i], i);
 }
+
+submitBtn.addEventListener(`click`, () => {
+    let newBook = new Book(titleInput.value, authorInput.value, tglBtn.classList.contains(`active`));
+    myLibrary.push(newBook);
+    titleInput.value = null;
+    titleInput.classList.remove(`filled`);
+    authorInput.value = null;
+    authorInput.classList.remove(`filled`);
+    tglBtn.classList.remove(`active`);
+    tglText.textContent = `No, not yet`;
+    addBookWindow.classList.add(`hidden`);
+    
+    results.innerHTML = null;
+
+    for (let i = 0; i < myLibrary.length; i++) {
+        displayBooks(myLibrary[i], i);
+    }
+});
+
+const inputs = [titleInput, authorInput];
+inputs.forEach(input => {
+    input.addEventListener(`input`, () => {
+        checkFill(input);
+    })
+});
+
+addBookBtn.addEventListener(`click`, () => {
+    addBookWindow.classList.toggle(`hidden`);
+});
+
+tglBtn.addEventListener(`click`, () => {
+    tglBtn.classList.toggle(`active`);
+    if (tglBtn.classList.contains(`active`)) {
+        tglText.textContent = `Yes, I have`;
+    } else {
+        tglText.textContent = `No, not yet`
+    }
+});
+
+/* Core Functions */
+
+function checkFill(ipt) {
+    if (ipt.value.length == 0) {
+        ipt.classList.remove(`filled`)
+    } else {
+        ipt.classList.add(`filled`)
+    }
+};
 
 function displayBooks(book, i) {
     let card = document.createElement(`div`);
@@ -83,62 +144,3 @@ function displayBooks(book, i) {
     card.appendChild(controlPanel);
     results.appendChild(card);
 }
-
-
-// DOM
-
-const submitBtn = document.getElementById(`submitBtn`);
-const titleInput = document.getElementById(`title`);
-const authorInput = document.getElementById(`author`);
-const tglBtn = document.getElementById(`tglBtn`);
-const tglText = document.getElementById(`tglText`);
-
-const addBookBtn = document.getElementById(`addBookBtn`);
-const addBookWindow = document.getElementById(`addBookWindow`);
-
-submitBtn.addEventListener(`click`, () => {
-    let newBook = new Book(titleInput.value, authorInput.value, tglBtn.classList.contains(`active`));
-    myLibrary.push(newBook);
-    titleInput.value = null;
-    titleInput.classList.remove(`filled`);
-    authorInput.value = null;
-    authorInput.classList.remove(`filled`);
-    tglBtn.classList.remove(`active`);
-    tglText.textContent = `No, not yet`;
-    addBookWindow.classList.add(`hidden`);
-    
-    results.innerHTML = null;
-
-    for (let i = 0; i < myLibrary.length; i++) {
-        displayBooks(myLibrary[i], i);
-    }
-});
-
-function checkFill(ipt) {
-    if (ipt.value.length == 0) {
-        ipt.classList.remove(`filled`)
-    } else {
-        ipt.classList.add(`filled`)
-    }
-};
-
-const inputs = [titleInput, authorInput];
-inputs.forEach(input => {
-    input.addEventListener(`input`, () => {
-        checkFill(input);
-    })
-});
-
-
-addBookBtn.addEventListener(`click`, () => {
-    addBookWindow.classList.toggle(`hidden`);
-});
-
-tglBtn.addEventListener(`click`, () => {
-    tglBtn.classList.toggle(`active`);
-    if (tglBtn.classList.contains(`active`)) {
-        tglText.textContent = `Yes, I have`;
-    } else {
-        tglText.textContent = `No, not yet`
-    }
-});
