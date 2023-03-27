@@ -31,20 +31,24 @@ for (let i = 0; i < myLibrary.length; i++) {
 }
 
 submitBtn.addEventListener(`click`, () => {
-    let newBook = new Book(titleInput.value, authorInput.value, tglBtn.classList.contains(`active`));
-    myLibrary.push(newBook);
-    titleInput.value = null;
-    titleInput.classList.remove(`filled`);
-    authorInput.value = null;
-    authorInput.classList.remove(`filled`);
-    tglBtn.classList.remove(`active`);
-    tglText.textContent = `No, not yet`;
-    addBookWindow.classList.add(`hidden`);
-    
-    results.innerHTML = null;
-
-    for (let i = 0; i < myLibrary.length; i++) {
-        displayBooks(myLibrary[i], i);
+    if (titleInput.validity.valid && authorInput.validity.valid) {
+        let newBook = new Book(titleInput.value, authorInput.value, tglBtn.classList.contains(`active`));
+        myLibrary.push(newBook);
+        titleInput.value = null;
+        titleInput.classList.remove(`filled`);
+        authorInput.value = null;
+        authorInput.classList.remove(`filled`);
+        tglBtn.classList.remove(`active`);
+        tglText.textContent = `No, not yet`;
+        addBookWindow.classList.add(`hidden`);
+        
+        results.innerHTML = null;
+        
+        for (let i = 0; i < myLibrary.length; i++) {
+            displayBooks(myLibrary[i], i);
+        }
+    } else {
+        alert(`You need to provide a book title and author name to submit`);
     }
 });
 
